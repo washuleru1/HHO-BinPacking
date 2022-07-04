@@ -12,7 +12,7 @@ public class Problem {
 		99, 82, 86, 88, 52, 76, 76, 50, 51, 92, 59, 22, 60, 69, 45, 66, 50, 62, 59, 90, 54, 55, 92, 23, 97, 
 		73, 39, 88, 34, 92, 74, 90 };
 	private final int capacity = 150;
-	protected final int nVars = 250;
+	protected final int nVars = Constants.N_VARS;
 
 	protected int optimum() {
 		return 101;

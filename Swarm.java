@@ -1,15 +1,16 @@
 
 public class Swarm {
 	
-	private final int ps = 25;
-	private final int T = 1000;
+	private final int ps = Constants.POPULATION_SIZE;
+	private final int T = Constants.MAX_ITTER;
 	private double escapeEnergy = 0;
+	private int bestItter;
     private Randoms randomValues;
     private double Upper = 1;
     private double Lower = -1;
 	private double baseEnergy = 0;
 	private double E1, r, S, u, v;
-	private static final double beta = 1.5;
+	private static final double beta = Constants.BETA;
 	
 	private java.util.List<Hawk> swarm = null;
 	private Hawk g = null;
@@ -95,10 +96,13 @@ public class Swarm {
 					swarm.get(i).copy(hawk);
 				}
 				if (hawk.isBetterThanPBest()) {
+					//System.out.println("UPDATE P BEST");
 					hawk.updatePBest();
 				}
 				if (hawk.isBetterThan(g)) {
+					//System.out.println("BETTER THAN G");
 					g.copy(hawk);
+					setBestItter(t);
 				}
 			}
 			log(t);
@@ -122,6 +126,14 @@ public class Swarm {
 			sum=0;
 		}
 		return data;
+	}
+
+	private void setBestItter(int t) {
+		this.bestItter = t;
+	}
+
+	public int getBestItter() {
+		return this.bestItter;
 	}
 
 }
