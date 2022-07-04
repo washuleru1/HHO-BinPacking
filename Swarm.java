@@ -94,14 +94,6 @@ public class Swarm {
 					} while(!hawk.isFeasible());
 					swarm.get(i).copy(hawk);
 				}
-				//do {
-				//	hawk.copy(swarm.get(i));
-				//	//hawk.move(g, fmin, fmax);
-				//} while (!hawk.isFeasible());
-				//if (hawk.hasExploitation() && !hawk.isBetterThan(g)) {
-				//	//hawk.decreasesLoudness(alpha);
-				//	//hawk.increasesPulseEmission(gamma, t);
-				//}
 				if (hawk.isBetterThanPBest()) {
 					hawk.updatePBest();
 				}
@@ -125,7 +117,6 @@ public class Swarm {
 		for (int i = 0; i < nVars; i++) {
 			for (int j = 0; j < ps; j++) {
 				sum+=swarm.get(j).getPositionVector()[i];
-				//System.out.println(sum);
 			}
 			data[i] = sum/ps;
 			sum=0;

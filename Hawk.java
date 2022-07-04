@@ -2,17 +2,12 @@ public class Hawk extends Problem {
 
 	private int[] x = new int[nVars];
 	private int[] p = new int[nVars];
-	private int S = 0;
-	private double v, r, u = 0;
 	private final int LB = 0;
 	private final int UB = 1;
 	private double rabbitJump = 0;
 	private double sigma = 0;
 	private double deltaXt = 0;
 	private double Y, levyFlight, Z = 0;
-	private double[] f = new double[nVars];
-	private double[] r0 = new double[nVars];
-	private double[] A = new double[nVars];
 
 	public Hawk() {
 		for (int j = 0; j < nVars; j++) {
@@ -28,10 +23,8 @@ public class Hawk extends Problem {
 	protected void exploration(Hawk g, Randoms randomValues, double[] averageHawksPosition) {
 		for (int j = 0; j < nVars; j++) {
 			if(randomValues.getQ() >= 0.5) {
-				//System.out.println("Q <= 0.5");
 				x[j]  =  toBinary(x[j] - StdRandom.uniform() * Math.abs(x[j] - (2 * StdRandom.uniform() * g.x[j])));
 			} else {
-				//System.out.println("Q > 0.5");
 				x[j] = toBinary(x[j] - averageHawksPosition[j] - randomValues.getR3() * (LB + randomValues.getR4() * (UB - LB)));
 			}
 		}
@@ -102,19 +95,6 @@ public class Hawk extends Problem {
 		return StdRandom.uniform() <= (1 / (1 + Math.pow(Math.E, -x))) ? 1 : 0;
 	}
 
-    protected double avgA() {
-    	return avg(A);
-    }
-    
-    private double avg(double[] a) {
-    	 return java.util.Arrays.stream(a).average().getAsDouble();
-    }
-    
-    protected void move(final Hawk g, final double fmin, final double fmax) {
-        double beta;
-        for (int j = 0; j < nVars; j++) {
-        }
-    }
     private float diff() {
 		return computeFitness(x) - optimum();
 	}
