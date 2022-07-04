@@ -102,6 +102,7 @@ public class Swarm {
 				if (hawk.isBetterThan(g)) {
 					//System.out.println("BETTER THAN G");
 					g.copy(hawk);
+					hawk.updatePBest();
 					setBestItter(t);
 				}
 			}
