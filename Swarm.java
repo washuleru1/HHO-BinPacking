@@ -11,6 +11,7 @@ public class Swarm {
 	private double baseEnergy = 0;
 	private double E1, r, S, u, v;
 	private static final double beta = Constants.BETA;
+	private int pBest;
 	
 	private java.util.List<Hawk> swarm = null;
 	private Hawk g = null;
@@ -19,7 +20,7 @@ public class Swarm {
 		init();
 		evolve();
 	}
-	
+
 	private void init() {
 		swarm = new java.util.ArrayList<Hawk>();
 		g = new Hawk();
@@ -44,7 +45,6 @@ public class Swarm {
 		Hawk hawk = new Hawk();
 		while(t <= T) {
 			//seteo de valores randomicos por iteración
-			
 			E1 = 2.0*(1 - (t/T));
 			//se recorre cada halcon del enjambre
 			for (int i = 0; i < ps; i++) {
@@ -68,12 +68,10 @@ public class Swarm {
 						hawk.copy(swarm.get(i));
 						//soft beseige
 						if (r >= 0.5 && Math.abs(escapeEnergy) >= 0.5) {
-							//System.out.println("SOFT BESEIGE");
 							hawk.softBeseige(g, escapeEnergy);
 						}
 						//hard beseige
 						if (r >= 0.5 && Math.abs(escapeEnergy) < 0.5) {
-							//System.out.println("HARD BESEIGE");
 							hawk.hardBeseige(g, escapeEnergy);
 						}
 						//soft beseige with progresive rapid dives
@@ -81,7 +79,6 @@ public class Swarm {
 							S = StdRandom.uniform(2);
 							u = StdRandom.uniform();
 							v = StdRandom.uniform();
-							//System.out.println("SOFT PROGRESIVE");
 							hawk.softBeseigeProgresive(g, escapeEnergy, beta, S, u, v);
 						}
 						//hard beseige with progresive rapid dives
@@ -89,21 +86,19 @@ public class Swarm {
 							S = StdRandom.uniform(2);
 							u = StdRandom.uniform();
 							v = StdRandom.uniform();
-							//System.out.println("HARD PROGRESIVE");
 							hawk.hardBeseigeProgresive(g, escapeEnergy, beta, averageHawksPosition(), S, u, v);
 						}
 					} while(!hawk.isFeasible());
 					swarm.get(i).copy(hawk);
 				}
 				if (hawk.isBetterThanPBest()) {
-					//System.out.println("UPDATE P BEST");
 					hawk.updatePBest();
 				}
 				if (hawk.isBetterThan(g)) {
-					//System.out.println("BETTER THAN G");
 					g.copy(hawk);
 					hawk.updatePBest();
 					setBestItter(t);
+					setPBest(hawk.computeFitnessPBest());
 				}
 			}
 			log(t);
@@ -137,4 +132,11 @@ public class Swarm {
 		return this.bestItter;
 	}
 
+	private void setPBest(int p){
+		this.pBest = p;
+	}
+
+	public int getSwarmPBestFitness() {
+		return this.pBest;
+	}
 }

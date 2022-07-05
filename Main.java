@@ -2,7 +2,8 @@
 public class Main {
 
 	public static void main(String[] args) {
-		int qMetrics[], bestItters[] = new int[Constants.EPOCH];
+		int bestItters[] = new int[Constants.EPOCH];
+		double[] qMetrics = new double[Constants.EPOCH];
 		int nVars, ps, suma, suma2;
 		double MaxFES, q;
 		Swarm swarm = null;
@@ -19,19 +20,17 @@ public class Main {
 				bestItters[r-1] = swarm.getBestItter();
 				if (MaxFES >= bestItters[r-1]) {
 					suma+=1;
-					q = ((Constants.OPTIMAL_VALUE * 1.05) - 1)/((Constants.OPTIMAL_VALUE * 1.05) - 1) ;
-					System.out.println("BEST ITTER: "+bestItters[r-1]);
 				}
+				System.out.println("BEST EPOCH FITNESS IN SWARM: "+ swarm.getSwarmPBestFitness());
+				q = ((Constants.OPTIMAL_VALUE * 1.05) - swarm.getSwarmPBestFitness())/((Constants.OPTIMAL_VALUE * 1.05) - Constants.OPTIMAL_VALUE);
+				qMetrics[r-1] = (Math.pow(2,Math.pow(q,Math.pow(10,3))) -1);
+				System.out.println("qMetrics: "+qMetrics[r-1]);
 				
 			}
 			for (int i = 0; i < bestItters.length; i++) {
-				if (MaxFES >= bestItters[i]){
-					suma2+=1;
-				}
 				System.out.println("BEST ITTER: "+bestItters[i]);
 			}
 			System.out.println((suma/(Constants.EPOCH)));
-			System.out.println((suma2/(Constants.EPOCH)));
 		} catch (Exception e) {
 			StdOut.printf("%s\n%s", e.getMessage(), e.getCause());
 		}

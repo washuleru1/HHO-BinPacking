@@ -20,6 +20,10 @@ public class Hawk extends Problem {
 		return x;
 	}
 
+	public int[] getPBest() {
+		return this.p;
+	}
+
 	protected void exploration(Hawk g, Randoms randomValues, double[] averageHawksPosition) {
 		for (int j = 0; j < nVars; j++) {
 			if(randomValues.getQ() >= 0.5) {
@@ -46,7 +50,6 @@ public class Hawk extends Problem {
 	}
 
 	protected void softBeseigeProgresive(Hawk g, double escapeEnergy, double beta, double S, double u, double v) {
-		// la duda es si rabbitJump es en cada nvars o por cada iteracion
 		double gamma1 = gammaFunction(1 + beta);
 		double gamma2 = gammaFunction((1 + beta)/2);
 		sigma = Math.pow((gamma1 * Math.sin((Math.PI*beta)/2))/( gamma2 * beta * (2*(beta-1)/2)), (1/beta));
