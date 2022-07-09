@@ -61,7 +61,8 @@ public class Swarm {
 						hawk.exploration(g, randomValues, averageHawksPosition());
 					} while (!hawk.isFeasible());
 					swarm.get(i).copy(hawk);
-				} else {
+				} 
+				if(Math.abs(escapeEnergy) < 1 && !hawk.isBetterThan(g)) {
 					do{
 						//seteo de r randomico y halcon
 						r = StdRandom.uniform();
@@ -89,17 +90,19 @@ public class Swarm {
 							hawk.hardBeseigeProgresive(g, escapeEnergy, beta, averageHawksPosition(), S, u, v);
 						}
 					} while(!hawk.isFeasible());
-					swarm.get(i).copy(hawk);
+					//swarm.get(i).copy(hawk);
+					//hawk.updatePBest();
 				}
-				if (hawk.isBetterThanPBest()) {
-					hawk.updatePBest();
-				}
+				//if (hawk.isBetterThanPBest()) {
+				//	hawk.updatePBest();
+				//}
 				if (hawk.isBetterThan(g)) {
 					g.copy(hawk);
 					hawk.updatePBest();
 					setBestItter(t);
 					setPBest(hawk.computeFitnessPBest());
 				}
+				swarm.get(i).copy(hawk);
 			}
 			log(t);
 			t++;
